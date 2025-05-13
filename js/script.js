@@ -3,6 +3,33 @@
         let currentPage = 'login';
         let currentPostType = 'all';
 
+document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("myForm");
+
+    form.addEventListener("submit", function (e) {
+        e.preventDefault(); // stop default form submission
+
+        const username = document.getElementById("username").value;
+
+        // Send JSON to C++ backend
+        fetch("/api/submit", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ username: username })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log("Response from C++:", data);
+            alert("Success: " + data.message); // You can update this as needed
+        })
+        .catch(error => {
+            console.error("Error:", error);
+        });
+    });
+});
+
         // Initialize local storage if needed
         function initializeStorage() {
             if (!localStorage.getItem('users')) {
