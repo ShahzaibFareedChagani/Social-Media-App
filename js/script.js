@@ -30,6 +30,28 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
+// script.js
+document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("myForm");
+    form.addEventListener("submit", function (e) {
+        e.preventDefault(); // Prevent default form behavior
+        const username = document.getElementById("username").value;
+        fetch("/api/submit", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ username: username })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log("Server response:", data);
+            alert("Message from server: " + data.message);
+        })
+        .catch(error => console.error("Error:", error));
+    });
+});
+
         // Initialize local storage if needed
         function initializeStorage() {
             if (!localStorage.getItem('users')) {
